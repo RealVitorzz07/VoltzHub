@@ -2,7 +2,7 @@
 
 local Library = {}
 Library.__index = Library
-Library.Core = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+Library.Core = loadstring(game:HttpGet("https://raw.githubusercontent.com/RealVitorzz07/VoltzHub/refs/heads/main/Main.lua"))()
 
 local MainWindow = nil
 
