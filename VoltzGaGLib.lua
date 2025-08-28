@@ -16,7 +16,7 @@ function Library:Setup()
 		Folder = "VoltzHub",
 		Size = UDim2.fromOffset(580, 460),
 		Transparent = true,
-		Theme = "Orange",
+		Theme = "Dark",
 		Resizable = true,
 		SideBarWidth = 200,
 		Background = "",
