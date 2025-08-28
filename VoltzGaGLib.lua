@@ -11,7 +11,7 @@ function Library:Setup()
 
 	MainWindow = Library.Core:CreateWindow({
 		Title = "Voltz Hub",
-		Icon = "🔥",
+		Icon = "star",
 		Author = (premium and "FreePremium" or "Cultive um Graden") .. " | " .. version,
 		Folder = "VoltzHub",
 		Size = UDim2.fromOffset(580, 460),
