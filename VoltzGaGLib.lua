@@ -2,18 +2,17 @@
 
 local Library = {}
 Library.__index = Library
-Library.Async = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
+Library.Core = loadstring(game:HttpGet("https://github.com/Footagesus/WindUI/releases/latest/download/main.lua"))()
 
-local UI = Library.Async --// Shortened
-
-local Window = nil
+local MainWindow = nil -- Mantém a janela principal
 
 function Library:Setup()
 	local version = LRM_ScriptVersion and "v" .. table.concat(LRM_ScriptVersion:split(""), ".") or "Dev Version"
-	Window = UI:CreateWindow({
+
+	MainWindow = Library.Core:CreateWindow({
 		Title = "Voltz Hub",
 		Icon = "🔥",
-		Author = (premium and "FreePremium" or " Cultive um Graden") .. " | " .. version,
+		Author = (premium and "FreePremium" or "Cultive um Graden") .. " | " .. version,
 		Folder = "VoltzHub",
 		Size = UDim2.fromOffset(580, 460),
 		Transparent = true,
@@ -33,75 +32,59 @@ function Library:Setup()
 		},
 	})
 
-	return Window
+	return MainWindow
+end
+
+function Library:GetWindow()
+	if not MainWindow then
+		return self:Setup()
+	end
+	return MainWindow
 end
 
 function Library:CreateTab(Name, Icon)
-	local Window = Window or self:Setup()
+	local Window = self:GetWindow()
 
-	if not Window then
-		error("[Library]: Failed to find Window")
-		return
-	end
-
-	local Tab = Window:Tab({
+	return Window:Tab({
 		Title = Name,
 		Icon = Icon,
 		Locked = false,
 	})
-
-	return Tab
 end
 
 function Library:CreateSection(Tab, Title, Size)
-	local Section = Tab:Section({
+	return Tab:Section({
 		Title = Title,
 		TextXAlignment = "Left",
 		TextSize = Size or 17,
 	})
-
-	return Section
 end
 
 function Library:CreateToggle(Tab, Table)
-	local Toggle = Tab:Toggle(Table)
-
-	return Toggle
+	return Tab:Toggle(Table)
 end
 
 function Library:CreateButton(Tab, Table)
-	local Button = Tab:Button(Table)
-
-	return Button
+	return Tab:Button(Table)
 end
 
 function Library:CreateSlider(Tab, Table)
-	local Slider = Tab:Slider(Table)
-
-	return Slider
+	return Tab:Slider(Table)
 end
 
 function Library:CreateDropdown(Tab, Table)
-	local Dropdown = Tab:Dropdown(Table)
-
-	return Dropdown
+	return Tab:Dropdown(Table)
 end
 
 function Library:CreateInput(Tab, Table)
-	local Input = Tab:Input(Table)
-
-	return Input
+	return Tab:Input(Table)
 end
 
 --// Special Setups
 function Library:SetupAboutUs(AboutUs)
-	local Window = Window or self:Setup()
+	local Window = self:GetWindow()
 
-	if not Window then
-		error("[Library]: Failed to find Window")
-		return
-	end
-
+	-- Exemplo de parágrafo comentado
 	-- AboutUs:Paragraph({
 	-- 	Title = "Quem somos nós?",
 	-- 	Icon = "user-circle",
@@ -119,7 +102,11 @@ function Library:SetupAboutUs(AboutUs)
 		Icon = "link",
 		Callback = function()
 			setclipboard("https://discord.gg/ujHdTKgZ")
-			Library:Notify({ Title = "Copiado!", Content = "Link do Discord copiado!", Duration = 3 })
+			if Library.Notify then
+				Library:Notify({ Title = "Copiado!", Content = "Link do Discord copiado!", Duration = 3 })
+			else
+				print("[Library]: Copiado para a área de transferência!")
+			end
 		end,
 	})
 end
